@@ -149,6 +149,8 @@ button.btn-green {
 }
 
 button.btn-google {
+  
+  max-width: fit-content;
   background-color: white;
   color: var(--color-text);
 }

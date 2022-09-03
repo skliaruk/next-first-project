@@ -11,7 +11,7 @@ import {
 import { useState } from "react";
 import Loader from "../components/Loader";
 import PostFeed from "../components/PostFeed";
-import { firestore, fromMillis, postsCol, postToJSON } from "../lib/firebase";
+import { firestore, fromMillis, postToJSON } from "../lib/firebase";
 
 const LIMIT = 2;
 export async function getServerSideProps(context) {
@@ -54,7 +54,6 @@ export default function Home(props) {
   };
   return (
     <main>
-      
       <PostFeed posts={posts} admin={false} />
 
       {!loading && !postsEnd && (

@@ -13,7 +13,6 @@ import UserProfile from "../../components/UserProfile";
 import {
   firestore,
   getUserWithUsername,
-  postsCol,
   postToJSON,
 } from "../../lib/firebase";
 

@@ -2,11 +2,11 @@ import Link from "next/link";
 import { ReactMarkdown } from "react-markdown/lib/react-markdown";
 import { Post } from "../lib/types";
 
-const PostContent: React.FC<{ post: Post }> = ({ post }) => {
+const PostContent: React.FC<{ post }> = ({ post }) => {
   const createdAt =
     typeof post?.createdAt === "number"
       ? new Date(post.createdAt)
-      : post.createdAt;
+      : post.createdAt.toDate();
 
   return (
     <div className="card">
@@ -16,7 +16,7 @@ const PostContent: React.FC<{ post: Post }> = ({ post }) => {
         <Link href={`/${post.username}`}>
           <a className="text-info"> @{post.username}</a>
         </Link>{" "}
-        on {(createdAt as Date).toISOString()}
+        on {createdAt.toISOString()}
       </span>
       <ReactMarkdown>{post?.content}</ReactMarkdown>
     </div>

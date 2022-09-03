@@ -1,4 +1,4 @@
-import { Timestamp } from "@firebase/firestore";
+import { Timestamp, FieldValue } from "@firebase/firestore";
 export type Post = {
   content: string;
   heartCount: number;
@@ -7,6 +7,6 @@ export type Post = {
   title: string;
   uid: string;
   username: string;
-  createdAt: Timestamp;
-  updatedAt: Timestamp;
+  createdAt: Timestamp | Date | FieldValue;
+  updatedAt: Timestamp | Date | FieldValue;
 };

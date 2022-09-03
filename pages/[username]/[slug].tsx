@@ -10,10 +10,12 @@ import {
   where,
 } from "firebase/firestore";
 import Link from "next/link";
+import { useContext } from "react";
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import AuthCheck from "../../components/AuthCkeck";
 import HeartButton from "../../components/HearthButton";
 import PostContent from "../../components/PostContent";
+import { UserContext } from "../../lib/context";
 
 import {
   auth,
@@ -62,6 +64,7 @@ export async function getStaticPaths() {
 export default function PostPage(props) {
   const postRef = doc(firestore, props.path);
   const [realtimePost] = useDocumentData(postRef);
+  const { user: currentUser } = useContext(UserContext);
 
   const post = realtimePost || props.post;
 
@@ -85,6 +88,12 @@ export default function PostPage(props) {
         >
           <HeartButton postRef={postRef} />
         </AuthCheck>
+
+        {currentUser?.uid === post.uid && (
+          <Link href={`/admin/${post.slug}`}>
+            <button className="btn-blue">Edit Post</button>
+          </Link>
+        )}
       </aside>
     </main>
   );

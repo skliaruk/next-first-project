@@ -1,5 +1,13 @@
 import { User } from "firebase/auth";
-import { query, getDocs, limit, orderBy, where } from "firebase/firestore";
+import {
+  query,
+  getDocs,
+  limit,
+  orderBy,
+  where,
+  collection,
+  collectionGroup,
+} from "firebase/firestore";
 import PostFeed from "../../components/PostFeed";
 import UserProfile from "../../components/UserProfile";
 import {
@@ -24,13 +32,13 @@ export async function getServerSideProps(context) {
   if (userDoc) {
     user = userDoc.data();
     const q = query(
-      postsCol,
+      collectionGroup(firestore, "posts"),
       where("username", "==", username),
       orderBy("createdAt", "desc"),
       limit(5)
     );
 
-    posts = (await getDocs(q)).docs.map(postToJSON);
+    posts = (await getDocs(q)).docs.map((doc) => postToJSON(doc));
   }
 
   return { props: { user, posts } };

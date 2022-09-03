@@ -32,7 +32,7 @@ const PostItem: React.FC<{ post: any; admin: boolean }> = ({
         <span>
           {wordCount} words. {minutesToRead} min read
         </span>
-        <span>{post.heartCount} Hearts</span>
+        <span className="push-left">💗 {post.heartCount || 0} Hearts</span>
       </footer>
     </div>
   );

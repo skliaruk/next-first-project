@@ -1,4 +1,5 @@
 import {
+  collection,
   collectionGroup,
   getDocs,
   limit,
@@ -9,9 +10,10 @@ import {
 } from "firebase/firestore";
 import { useState } from "react";
 import Loader from "../components/Loader";
+import PostFeed from "../components/PostFeed";
 import { firestore, fromMillis, postsCol, postToJSON } from "../lib/firebase";
 
-const LIMIT = 1;
+const LIMIT = 2;
 export async function getServerSideProps(context) {
   const q = query(
     collectionGroup(firestore, "posts"),
@@ -20,7 +22,7 @@ export async function getServerSideProps(context) {
     limit(LIMIT)
   );
 
-  const posts = (await getDocs(q)).docs.map(postToJSON);
+  const posts = (await getDocs(q)).docs.map((doc) => postToJSON(doc));
 
   return { props: { posts } };
 }
@@ -29,7 +31,6 @@ export default function Home(props) {
   const [loading, setLoading] = useState(false);
 
   const [postsEnd, setPostsEnd] = useState(false);
-
   const getMorePosts = async () => {
     setLoading(true);
 
@@ -53,10 +54,12 @@ export default function Home(props) {
   };
   return (
     <main>
+      
+      <PostFeed posts={posts} admin={false} />
+
       {!loading && !postsEnd && (
         <button onClick={getMorePosts}>Load more</button>
       )}
-
       <Loader show={loading} />
 
       {postsEnd && "Nothing to show"}

@@ -21,7 +21,6 @@ import {
   auth,
   firestore,
   getUserWithUsername,
-  postsCol,
   postToJSON,
 } from "../../lib/firebase";
 import { Post } from "../../lib/types";
